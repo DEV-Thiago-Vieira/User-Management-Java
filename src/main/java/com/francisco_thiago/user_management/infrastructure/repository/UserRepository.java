@@ -1,6 +1,6 @@
 package com.francisco_thiago.user_management.infrastructure.repository;
 
-import com.francisco_thiago.user_management.infrastructure.entities.User;
+import com.francisco_thiago.user_management.infrastructure.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

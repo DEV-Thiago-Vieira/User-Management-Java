@@ -1,4 +1,4 @@
-package com.francisco_thiago.user_management.infrastructure.entities;
+package com.francisco_thiago.user_management.infrastructure.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

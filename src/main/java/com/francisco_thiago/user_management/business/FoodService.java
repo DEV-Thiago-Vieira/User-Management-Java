@@ -1,6 +1,7 @@
 package com.francisco_thiago.user_management.business;
 
-import com.francisco_thiago.user_management.infrastructure.entities.Food;
+import com.francisco_thiago.user_management.infrastructure.entity.Food;
+import com.francisco_thiago.user_management.infrastructure.exception.ResourceNotFoundException;
 import com.francisco_thiago.user_management.infrastructure.repository.FoodRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class FoodService {
     }
 
     public Food findById(Long id) {
-        return foodRepository.findById(id).orElseThrow(() -> new RuntimeException("Food not found."));
+        return foodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Food not found."));
     }
 
     public void save(Food food) {

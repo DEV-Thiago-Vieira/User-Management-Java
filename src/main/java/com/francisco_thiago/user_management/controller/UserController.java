@@ -1,7 +1,7 @@
 package com.francisco_thiago.user_management.controller;
 
 import com.francisco_thiago.user_management.business.UserService;
-import com.francisco_thiago.user_management.infrastructure.entities.User;
+import com.francisco_thiago.user_management.infrastructure.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

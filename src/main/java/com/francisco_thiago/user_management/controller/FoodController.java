@@ -1,7 +1,7 @@
 package com.francisco_thiago.user_management.controller;
 
 import com.francisco_thiago.user_management.business.FoodService;
-import com.francisco_thiago.user_management.infrastructure.entities.Food;
+import com.francisco_thiago.user_management.infrastructure.entity.Food;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

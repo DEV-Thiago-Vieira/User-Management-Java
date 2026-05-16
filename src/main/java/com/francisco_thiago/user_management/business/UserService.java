@@ -1,6 +1,7 @@
 package com.francisco_thiago.user_management.business;
 
-import com.francisco_thiago.user_management.infrastructure.entities.User;
+import com.francisco_thiago.user_management.infrastructure.entity.User;
+import com.francisco_thiago.user_management.infrastructure.exception.ResourceNotFoundException;
 import com.francisco_thiago.user_management.infrastructure.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class UserService {
 
     public User searchUserByEmail(String email) {
         return repository.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("Email not found!")
+                () -> new ResourceNotFoundException("User not found with email: "+ email)
         );
     }
 
