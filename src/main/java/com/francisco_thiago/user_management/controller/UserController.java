@@ -34,16 +34,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Find user by email", description = "Returns a single user that matches the given email")
+    @Operation(summary = "Find user by id", description = "Returns a single user by its id.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User found"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping
     public ResponseEntity<User> getUserByEmail(
-            @Parameter(description = "Email address of the user", example = "john@example.com", required = true)
-            @RequestParam String email) {
-        return ResponseEntity.ok(userService.searchUserByEmail(email));
+            @Parameter(description = "Id of the user", example = "1", required = true)
+            @RequestParam Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
     @Operation(summary = "Delete user by email", description = "Deletes the user that matches the given email")

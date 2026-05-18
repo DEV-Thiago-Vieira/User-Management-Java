@@ -18,9 +18,9 @@ public class UserService {
         repository.saveAndFlush(user);
     }
 
-    public User searchUserByEmail(String email) {
-        return repository.findByEmail(email).orElseThrow(
-                () -> new ResourceNotFoundException("User not found with email: "+ email)
+    public User findById(Long id) {
+        return repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User not found.")
         );
     }
 
