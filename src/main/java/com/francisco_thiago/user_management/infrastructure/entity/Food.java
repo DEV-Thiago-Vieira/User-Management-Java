@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,7 +19,7 @@ import lombok.Setter;
 public class Food {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "Unique identifier of the food item", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
@@ -25,7 +27,7 @@ public class Food {
     @Schema(description = "Name of the food item", example = "Margherita Pizza")
     private String name;
 
-    @Column(name = "price", length = 10, nullable = false)
+    @Column(name = "price", precision = 10, scale = 2, nullable = false)
     @Schema(description = "Price of the food item", example = "12.99")
-    private Double price;
+    private BigDecimal price;
 }
