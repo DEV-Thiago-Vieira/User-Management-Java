@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "food")
-@Schema(description = "Represents a food item in the system")
 public class Food {
 
     @Id

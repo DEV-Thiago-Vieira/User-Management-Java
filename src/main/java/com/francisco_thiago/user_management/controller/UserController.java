@@ -1,7 +1,9 @@
 package com.francisco_thiago.user_management.controller;
 
 import com.francisco_thiago.user_management.business.UserService;
-import com.francisco_thiago.user_management.infrastructure.entity.User;
+import com.francisco_thiago.user_management.infrastructure.dto.DetailedUserResponseDTO;
+import com.francisco_thiago.user_management.infrastructure.dto.UserRequestDTO;
+import com.francisco_thiago.user_management.infrastructure.dto.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,7 +31,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Void> saveUser(
             @Parameter(description = "User object to be created", required = true)
-            @RequestBody User user) {
+            @RequestBody UserRequestDTO user) {
         userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -40,7 +42,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping
-    public ResponseEntity<User> getUserByEmail(
+    public ResponseEntity<DetailedUserResponseDTO> getUserByEmail(
             @Parameter(description = "Id of the user", example = "1", required = true)
             @RequestParam Long id) {
         return ResponseEntity.ok(userService.findById(id));
@@ -70,7 +72,7 @@ public class UserController {
             @Parameter(description = "ID of the user to update", example = "1", required = true)
             @RequestParam Long id,
             @Parameter(description = "Updated user data", required = true)
-            @RequestBody User user) {
+            @RequestBody UserRequestDTO user) {
         userService.updateUser(id, user);
         return ResponseEntity.ok().build();
     }

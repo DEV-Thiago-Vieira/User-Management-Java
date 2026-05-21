@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "ticket")
-@Schema(description = "Represents a ticket item in the system")
 public class Ticket {
 
     @Id

@@ -1,7 +1,8 @@
 package com.francisco_thiago.user_management.controller;
 
 import com.francisco_thiago.user_management.business.FoodService;
-import com.francisco_thiago.user_management.infrastructure.entity.Food;
+import com.francisco_thiago.user_management.infrastructure.dto.FoodRequestDTO;
+import com.francisco_thiago.user_management.infrastructure.dto.FoodResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,7 +28,7 @@ public class FoodController {
             @ApiResponse(responseCode = "404", description = "No foods found")
     })
     @GetMapping
-    public ResponseEntity<List<Food>> findAll() {
+    public ResponseEntity<List<FoodResponseDTO>> findAll() {
         return ResponseEntity.ok(foodService.findAll());
     }
 
@@ -37,7 +38,7 @@ public class FoodController {
             @ApiResponse(responseCode = "404", description = "Food not found")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<Food> findById(
+    public ResponseEntity<FoodResponseDTO> findById(
             @Parameter(description = "ID of the food to retrieve", example = "1", required = true)
             @PathVariable Long id) {
         return ResponseEntity.ok(foodService.findById(id));
@@ -51,7 +52,7 @@ public class FoodController {
     @PostMapping
     public ResponseEntity<Void> save(
             @Parameter(description = "Food object to be created", required = true)
-            @RequestBody Food food) {
+            @RequestBody FoodRequestDTO food) {
         foodService.save(food);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -67,7 +68,7 @@ public class FoodController {
             @Parameter(description = "ID of the food to update", example = "1", required = true)
             @RequestParam Long id,
             @Parameter(description = "Updated food data", required = true)
-            @RequestBody Food food) {
+            @RequestBody FoodRequestDTO food) {
         foodService.update(id, food);
         return ResponseEntity.ok().build();
     }

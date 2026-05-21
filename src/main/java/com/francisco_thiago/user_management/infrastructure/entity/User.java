@@ -11,7 +11,6 @@ import lombok.*;
 @Builder
 @Table(name = "users")
 @Entity
-@Schema(description = "Represents a user in the system")
 public class User {
 
     @Id
