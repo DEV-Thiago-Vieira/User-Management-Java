@@ -5,10 +5,12 @@ import com.francisco_thiago.user_management.infrastructure.entity.Food;
 import com.francisco_thiago.user_management.infrastructure.entity.Ticket;
 import com.francisco_thiago.user_management.infrastructure.entity.User;
 import com.francisco_thiago.user_management.infrastructure.exception.ResourceNotFoundException;
+import com.francisco_thiago.user_management.infrastructure.mapper.TicketMapper;
 import com.francisco_thiago.user_management.infrastructure.repository.FoodRepository;
 import com.francisco_thiago.user_management.infrastructure.repository.TicketRepository;
 import com.francisco_thiago.user_management.infrastructure.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,16 +22,19 @@ public class TicketService {
     private final UserRepository userRepository;
     private final FoodRepository foodRepository;
 
+    @Autowired
+    private final TicketMapper ticketMapper;
+
     public TicketResponseDTO findById(Long id) {
-       return toResponseDTO(ticketRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ticket not found.")));
+       return ticketMapper.toDTO(ticketRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ticket not found.")));
     }
 
     public List<TicketResponseDTO> findAllTickets() {
-        return ticketRepository.findAll().stream().map(this::toResponseDTO).toList();
+        return ticketRepository.findAll().stream().map(ticketMapper::toDTO).toList();
     }
 
     public void save(TicketRequestDTO ticketRequestDTO) {
-        ticketRepository.save(toEntity(ticketRequestDTO));
+        ticketRepository.save(ticketMapper.toEntity(ticketRequestDTO));
     }
 
     public void update(TicketUpdateRequestDTO ticketUpdateRequestDTO) {
@@ -41,30 +46,5 @@ public class TicketService {
 
     public void delete(Long id) {
         ticketRepository.deleteById(id);
-    }
-
-    private TicketResponseDTO toResponseDTO(Ticket ticket) {
-        UserResponseDTO userResponseDTO = new UserResponseDTO(
-                ticket.getUser().getId(),
-                ticket.getUser().getName()
-        );
-
-        FoodResponseDTO foodResponseDTO = new FoodResponseDTO(
-                ticket.getFood().getId(),
-                ticket.getFood().getName(),
-                ticket.getFood().getPrice()
-        );
-
-        return new TicketResponseDTO(
-                ticket.getId(),
-                userResponseDTO,
-                foodResponseDTO
-        );
-    }
-
-    private Ticket toEntity(TicketRequestDTO ticketRequestDTO) {
-        User user = userRepository.findById(ticketRequestDTO.userId()).orElseThrow(() -> new ResourceNotFoundException("User not found."));
-        Food food = foodRepository.findById(ticketRequestDTO.foodId()).orElseThrow(() -> new ResourceNotFoundException("Food not found."));
-        return new Ticket(null, user, food);
     }
 }

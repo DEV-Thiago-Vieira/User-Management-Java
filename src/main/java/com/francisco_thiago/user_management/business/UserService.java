@@ -1,28 +1,30 @@
 package com.francisco_thiago.user_management.business;
 
 import com.francisco_thiago.user_management.infrastructure.dto.*;
-import com.francisco_thiago.user_management.infrastructure.entity.Ticket;
 import com.francisco_thiago.user_management.infrastructure.entity.User;
 import com.francisco_thiago.user_management.infrastructure.exception.ResourceNotFoundException;
+import com.francisco_thiago.user_management.infrastructure.mapper.UserMapper;
 import com.francisco_thiago.user_management.infrastructure.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
 
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private final UserMapper userMapper;
 
     public void saveUser(UserRequestDTO user) {
-        User savedUser = new User(null, user.name(), user.email(), user.password());
+        User savedUser = userMapper.toEntity(user);
         repository.saveAndFlush(savedUser);
     }
 
     public DetailedUserResponseDTO findById(Long id) {
-        return toResponseDTO(repository.findById(id).orElseThrow(
+        return userMapper.toDetailedDTO(repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User not found.")
         ));
     }
@@ -42,13 +44,5 @@ public class UserService {
                 .password(user.password() != null ? user.password() : oldUser.getPassword())
                 .build();
         repository.saveAndFlush(updatedUser);
-    }
-
-    private DetailedUserResponseDTO toResponseDTO(User user) {
-        return new DetailedUserResponseDTO(
-                user.getId(),
-                user.getName(),
-                user.getEmail()
-        );
     }
 }
