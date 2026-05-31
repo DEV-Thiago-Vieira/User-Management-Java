@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,8 +41,8 @@ public class TicketController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<TicketResponseDTO> findById(
-            @Parameter(description = "ID of the ticket to retrieve", example = "1", required = true)
-            @PathVariable Long id) {
+            @Parameter(description = "ID of the ticket to retrieve", example = "550e8400-e29b-41d4-a716-446655440002", required = true)
+            @PathVariable UUID id) {
         return ResponseEntity.ok(ticketService.findById(id));
     }
 
@@ -80,8 +81,8 @@ public class TicketController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTicket(
-            @Parameter(description = "ID of the ticket to delete", example = "1", required = true)
-            @PathVariable Long id) {
+            @Parameter(description = "ID of the ticket to delete", example = "550e8400-e29b-41d4-a716-446655440002", required = true)
+            @PathVariable UUID id) {
         ticketService.delete(id);
         return ResponseEntity.ok().build();
     }

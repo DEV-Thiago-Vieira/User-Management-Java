@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,9 +19,9 @@ import java.math.BigDecimal;
 public class Food {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(description = "Unique identifier of the food item", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Schema(description = "Unique identifier of the food item", example = "550e8400-e29b-41d4-a716-446655440001", accessMode = Schema.AccessMode.READ_ONLY)
+    private UUID id;
 
     @Column(name = "name")
     @Schema(description = "Name of the food item", example = "Margherita Pizza")

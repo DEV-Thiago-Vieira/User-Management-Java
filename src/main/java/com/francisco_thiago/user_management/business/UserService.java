@@ -6,8 +6,9 @@ import com.francisco_thiago.user_management.infrastructure.exception.ResourceNot
 import com.francisco_thiago.user_management.infrastructure.mapper.UserMapper;
 import com.francisco_thiago.user_management.infrastructure.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +16,6 @@ public class UserService {
 
     private final UserRepository repository;
 
-    @Autowired
     private final UserMapper userMapper;
 
     public void saveUser(UserRequestDTO user) {
@@ -23,7 +23,7 @@ public class UserService {
         repository.saveAndFlush(savedUser);
     }
 
-    public DetailedUserResponseDTO findById(Long id) {
+    public DetailedUserResponseDTO findById(UUID id) {
         return userMapper.toDetailedDTO(repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User not found.")
         ));
@@ -33,7 +33,7 @@ public class UserService {
         repository.deleteByEmail(email);
     }
 
-    public void updateUser(Long id, UserRequestDTO user) {
+    public void updateUser(UUID id, UserRequestDTO user) {
         User oldUser = repository.findById(id).orElseThrow(
                 () -> new RuntimeException("User not found.")
         );

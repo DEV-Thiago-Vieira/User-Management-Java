@@ -3,7 +3,6 @@ package com.francisco_thiago.user_management.controller;
 import com.francisco_thiago.user_management.business.UserService;
 import com.francisco_thiago.user_management.infrastructure.dto.DetailedUserResponseDTO;
 import com.francisco_thiago.user_management.infrastructure.dto.UserRequestDTO;
-import com.francisco_thiago.user_management.infrastructure.dto.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @Tag(name = "Users", description = "Operations related to user management")
@@ -43,8 +44,8 @@ public class UserController {
     })
     @GetMapping
     public ResponseEntity<DetailedUserResponseDTO> getUserByEmail(
-            @Parameter(description = "Id of the user", example = "1", required = true)
-            @RequestParam Long id) {
+            @Parameter(description = "Id of the user", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
+            @RequestParam UUID id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
@@ -69,8 +70,8 @@ public class UserController {
     })
     @PutMapping
     public ResponseEntity<Void> updateUser(
-            @Parameter(description = "ID of the user to update", example = "1", required = true)
-            @RequestParam Long id,
+            @Parameter(description = "ID of the user to update", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
+            @RequestParam UUID id,
             @Parameter(description = "Updated user data", required = true)
             @RequestBody UserRequestDTO user) {
         userService.updateUser(id, user);

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Tag(name = "Foods", description = "Operations related to food management")
 @RestController
@@ -39,8 +40,8 @@ public class FoodController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<FoodResponseDTO> findById(
-            @Parameter(description = "ID of the food to retrieve", example = "1", required = true)
-            @PathVariable Long id) {
+            @Parameter(description = "ID of the food to retrieve", example = "550e8400-e29b-41d4-a716-446655440001", required = true)
+            @PathVariable UUID id) {
         return ResponseEntity.ok(foodService.findById(id));
     }
 
@@ -65,8 +66,8 @@ public class FoodController {
     })
     @PutMapping
     public ResponseEntity<Void> update(
-            @Parameter(description = "ID of the food to update", example = "1", required = true)
-            @RequestParam Long id,
+            @Parameter(description = "ID of the food to update", example = "550e8400-e29b-41d4-a716-446655440001", required = true)
+            @RequestParam UUID id,
             @Parameter(description = "Updated food data", required = true)
             @RequestBody FoodRequestDTO food) {
         foodService.update(id, food);
@@ -80,8 +81,8 @@ public class FoodController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(
-            @Parameter(description = "ID of the food to delete", example = "1", required = true)
-            @PathVariable Long id) {
+            @Parameter(description = "ID of the food to delete", example = "550e8400-e29b-41d4-a716-446655440001", required = true)
+            @PathVariable UUID id) {
         foodService.delete(id);
         return ResponseEntity.ok().build();
     }
